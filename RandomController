@@ -1,0 +1,80 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class RandomController : MonoBehaviour
+{
+    public GameObject block1;
+    public GameObject block2;
+    public GameObject block3;
+    public GameObject Coin;
+
+    public Transform Player;
+
+    public float deleteObjectTime;
+
+    public float Left_X = -3.25f;
+    public float Right_X = 3.25f;
+    public float Middle_X = 0.0f;
+
+    public float cloneTime = 1.0f;
+
+    private void Start()
+    {
+        InvokeRepeating("Object_Clone", 2, cloneTime);
+    }
+
+    void Object_Clone()
+    {
+        if (!GameCtrl.isGameStarting)
+            return;
+
+        int number = Random.Range(0, 100);
+
+        if (number > 80 && rastSayi < 100)
+        {
+            Clone(block1);
+        }
+
+        if (number > 65 && rastSayi < 80)
+        {
+            Clone(block2);
+        }
+
+        if (number > 50 && rastSayi < 65)
+        {
+            Clone(block3);
+        }
+
+        if (number > 0 && rastSayi < 50)
+        {
+            Clone(Coin);
+        }
+    }
+
+
+    void Clone(GameObject mewClone)
+    {
+        if (!GameCtrl.isGameStarting)
+            return;
+
+        int number = Random.Range(0, 90);
+
+        if (number > 60 && rastSayi < 90)
+        {
+            Instantiate(mewClone, new Vector3(Left_X, 1.5f, Player.transform.position.z +100), Quaternion.identity);
+        }
+
+        if (number > 30 && rastSayi < 60)
+        {
+            Instantiate(mewClone, new Vector3(Right_X, 1.5f, Player.transform.position.z + 100), Quaternion.identity);
+        }
+
+        if (number > 0 && rastSayi < 30)
+        {
+            Instantiate(mewClone, new Vector3(Middle_X, 1.5f, Player.transform.position.z + 100), Quaternion.identity);
+        }
+
+        Destroy(mewClone, deleteObjectTime);
+    }
+}
